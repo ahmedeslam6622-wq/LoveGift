@@ -1,0 +1,23 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Local testing
+.http-server-cache
+*.log
+
+# Node (if you add npm later)
+node_modules/
+package-lock.json
+
+# Environment files
+.env
+.env.local
