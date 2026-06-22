@@ -92,11 +92,11 @@ body {
    ============================================ */
 
 .card-container {
-    flex: 1;
+    flex: 0.7;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--space-md);
+    margin-bottom: 0px;
 }
 
 .card {
@@ -321,8 +321,9 @@ body {
     text-align: center;
     font-size: 14px;
     color: var(--color-text-light);
-    opacity: 0.6;
+    opacity: 0;
     letter-spacing: 0.5px;
+    display: none;
 }
 
 /* ============================================
