@@ -81,10 +81,8 @@ class LoveJarApp {
             this.reasonText.style.animation = 'fadeIn 0.5s ease-in-out';
         }, 50);
         
-        // Update background image
-        if (photo && photo.url) {
-            this.cardBackground.style.backgroundImage = `url('${photo.url}')`;
-        }
+        
+       //just use default bg
         
         // Hide counter (she won't know how many there are)
         this.counterText.textContent = "";
