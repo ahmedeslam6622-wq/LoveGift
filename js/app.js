@@ -1,21 +1,21 @@
 /* ============================================
-   LOVE JAR - APPLICATION LOGIC
-   Core functionality: card display, navigation, mood booster
+   LOVE JAR - APPLICATION LOGIC (UPDATED)
+   Random reasons, hidden counter, multiple mood messages
    ============================================ */
 
 class LoveJarApp {
     constructor() {
         this.reasons = window.appData.reasons || [];
         this.photos = window.appData.photos || [];
-        this.moodBooster = window.appData.moodBooster || {};
+        this.moodBoosterMessages = window.appData.moodBoosterMessages || [];
         
-        this.currentIndex = 0;
-        this.viewedReasons = new Set();
+        this.currentReasonText = null;
+        this.currentPhotoUrl = null;
         this.isInMoodBoosterMode = false;
         
         this.initElements();
         this.initEventListeners();
-        this.displayReason(0);
+        this.displayRandomReason();
         this.hideSwipeHintAfterDelay();
         
         // Analytics: Track app opens
@@ -66,14 +66,13 @@ class LoveJarApp {
         });
     }
 
-    displayReason(index) {
-        // Clamp index to valid range
-        index = Math.max(0, Math.min(index, this.reasons.length - 1));
-        this.currentIndex = index;
+    displayRandomReason() {
+        // Get a completely random reason
+        const reason = window.appData.getRandomReason();
+        const photo = window.appData.getRandomPhoto();
         
-        const reason = this.reasons[index];
-        const photoIndex = Math.floor(Math.random() * this.photos.length);
-        const photo = this.photos[photoIndex];
+        this.currentReasonText = reason;
+        this.currentPhotoUrl = photo.url;
         
         // Animate text change
         this.reasonText.style.animation = 'none';
@@ -87,26 +86,21 @@ class LoveJarApp {
             this.cardBackground.style.backgroundImage = `url('${photo.url}')`;
         }
         
-        // Update counter
-        this.updateCounter();
-        
-        // Track viewed reason
-        this.viewedReasons.add(index);
+        // Hide counter (she won't know how many there are)
+        this.counterText.textContent = "";
     }
 
     nextReason() {
         if (this.isInMoodBoosterMode) return;
         
-        const nextIndex = (this.currentIndex + 1) % this.reasons.length;
-        this.displayReason(nextIndex);
+        this.displayRandomReason();
         this.hideSwipeHint();
     }
 
     prevReason() {
         if (this.isInMoodBoosterMode) return;
         
-        const prevIndex = this.currentIndex === 0 ? this.reasons.length - 1 : this.currentIndex - 1;
-        this.displayReason(prevIndex);
+        this.displayRandomReason();
         this.hideSwipeHint();
     }
 
@@ -126,10 +120,9 @@ class LoveJarApp {
         // Update button state
         this.moodBtn.classList.add('active');
         
-        // Get special message and photo
-        const message = this.moodBooster.message || "I love you.";
-        const photoIndex = this.moodBooster.photoIndex || 0;
-        const photo = this.photos[photoIndex];
+        // Get random message and random photo
+        const message = window.appData.getRandomMoodBoosterMessage();
+        const photo = window.appData.getRandomPhoto();
         
         // Display mood booster content
         this.reasonText.style.animation = 'none';
@@ -145,8 +138,8 @@ class LoveJarApp {
         // Play subtle animation
         this.playMoodBoosterAnimation();
         
-        // Update counter
-        this.counterText.textContent = "💝 You are loved";
+        // Hide counter
+        this.counterText.textContent = "";
     }
 
     exitMoodBooster() {
@@ -160,7 +153,7 @@ class LoveJarApp {
         this.moodBtn.classList.remove('active');
         
         // Return to normal display
-        this.displayReason(this.currentIndex);
+        this.displayRandomReason();
     }
 
     playMoodBoosterAnimation() {
@@ -178,13 +171,6 @@ class LoveJarApp {
         setTimeout(() => {
             this.hideSwipeHint();
         }, 5000); // Hide after 5 seconds
-    }
-
-    updateCounter() {
-        const viewedCount = this.viewedReasons.size;
-        const totalCount = this.reasons.length;
-        const percentage = Math.round((viewedCount / totalCount) * 100);
-        this.counterText.textContent = `${this.currentIndex + 1} of ${totalCount}`;
     }
 
     handleKeyPress(e) {
