@@ -191,27 +191,27 @@ const MOOD_BOOSTER_MESSAGES = [
 const PHOTOS = [
     {
         id: 1,
-        url: "https://github.com/ahmedeslam6622-wq/LoveGift/blob/main/YoungMeWithMom.jpg",
+        url: "def",
         label: "A warm moment together",
     },
     {
         id: 2,
-        url: "https://github.com/ahmedeslam6622-wq/LoveGift/blob/main/BabyMeWithMom.jpg",
+        url: "def",
         label: "Laughing together",
     },
     {
         id: 3,
-        url: "https://github.com/ahmedeslam6622-wq/LoveGift/blob/main/momphoto3.jpeg",
+        url: "def",
         label: "A quiet moment",
     },
     {
         id: 4,
-        url: "https://github.com/ahmedeslam6622-wq/LoveGift/blob/main/momphoto2.jpeg",
+        url: "def",
         label: "Happy times",
     },
     {
         id: 5,
-        url: "https://github.com/ahmedeslam6622-wq/LoveGift/blob/main/momphoto1.jpeg",
+        url: "def",
         label: "Beautiful memories",
     },
 ];
