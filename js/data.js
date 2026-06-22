@@ -191,28 +191,8 @@ const MOOD_BOOSTER_MESSAGES = [
 const PHOTOS = [
     {
         id: 1,
-        url: "def",
-        label: "A warm moment together",
-    },
-    {
-        id: 2,
-        url: "def",
-        label: "Laughing together",
-    },
-    {
-        id: 3,
-        url: "def",
-        label: "A quiet moment",
-    },
-    {
-        id: 4,
-        url: "def",
-        label: "Happy times",
-    },
-    {
-        id: 5,
-        url: "def",
-        label: "Beautiful memories",
+        url: "",
+        label: "A warm moment",
     },
 ];
 
