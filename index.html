@@ -7,12 +7,7 @@
     <meta name="description" content="A jar of reasons why I love you">
     <title>Love Jar - For Mom</title>
     
-    <!-- Manifest for PWA -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
-    <!-- Google Fonts - carefully selected for warmth & readability -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,7 +16,6 @@
 </head>
 <body>
     <div id="app">
-        <!-- Full-screen card display -->
         <div class="card-container">
             <div class="card" id="reasonCard">
                 <div class="card-background" id="cardBackground"></div>
@@ -34,7 +28,6 @@
                     </div>
                 </div>
 
-                <!-- Subtle swipe hint (appears on first load) -->
                 <div class="swipe-hint" id="swipeHint">
                     <span class="hint-icon">👉</span>
                     <span class="hint-text">Tap to see more</span>
@@ -42,9 +35,8 @@
             </div>
         </div>
 
-        <!-- Bottom controls - minimal, intuitive -->
         <div class="controls">
-            <button class="btn btn-secondary" id="prevBtn" aria-label="Show previous reason">
+            <button class="btn btn-secondary" id="prevBtn" aria-label="Previous">
                 <span class="btn-icon">←</span>
             </button>
             
@@ -53,20 +45,13 @@
                 <span class="btn-text">I need you</span>
             </button>
             
-            <button class="btn btn-secondary" id="nextBtn" aria-label="Show next reason">
+            <button class="btn btn-secondary" id="nextBtn" aria-label="Next">
                 <span class="btn-icon">→</span>
             </button>
         </div>
-
-        <!-- Counter at bottom (subtle) -->
-        <div class="counter">
-            <span id="counterText">1 of 1</span>
-        </div>
     </div>
 
-    <!-- Scripts -->
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
-    
 </body>
 </html>
