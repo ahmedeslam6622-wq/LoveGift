@@ -1,23 +1,68 @@
-/* ============================================
-   SERVICE WORKER REGISTRATION
-   Enables offline functionality and PWA features
-   ============================================ */
+const CACHE_NAME = 'love-jar-v1';
+const FILES_TO_CACHE = [
+    '/',
+    '/index.html',
+    '/styles/main.css',
+    '/js/app.js',
+    '/js/data.js',
+];
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-            .then(registration => {
-                console.log('Service Worker registered successfully:', registration);
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => {
+                return cache.addAll(FILES_TO_CACHE).catch(() => {
+                    console.log('Some files not cached yet, will cache on next visit');
+                });
             })
-            .catch(error => {
-                console.log('Service Worker registration failed:', error);
-            });
-    });
-}
+    );
+    self.skipWaiting();
+});
 
-// Handle app update notifications
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service Worker updated - app is refreshed');
-    });
-}
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+    self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                if (response) {
+                    return response;
+                }
+
+                return fetch(event.request)
+                    .then(response => {
+                        if (!response || response.status !== 200) {
+                            return response;
+                        }
+
+                        const responseToCache = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                cache.put(event.request, responseToCache);
+                            });
+
+                        return response;
+                    })
+                    .catch(() => {
+                        return caches.match('/index.html');
+                    });
+            })
+    );
+});
